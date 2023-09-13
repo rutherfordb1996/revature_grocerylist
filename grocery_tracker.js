@@ -8,11 +8,11 @@ let grocerylist = [];
 baseCase();
 
 
-
+// this is the base layer, the code will loop back to this until the user decids to quit.
 function baseCase(){
     console.log("your current grocery list is:\n")
     for(let i = 0; i < grocerylist.length; i++){
-        console.log(`item: ${grocerylist[i].name}\n quantity: ${grocerylist[i].quantity}\n price: ${grocerylist[i].price}\n bought?: ${grocerylist[i].bought} \n`)
+        console.log(`item: ${grocerylist[i].name} quantity: ${grocerylist[i].quantity}\n price: ${grocerylist[i].price} bought?: ${grocerylist[i].bought} \n`)
     }
     rl.question("would you like to 1: add an item, 2: remove an item, 3: toggle bought status of an item, or 4: quit? \n", (userInput) => {
     switch(userInput.trim()){
@@ -34,7 +34,7 @@ function baseCase(){
         }
     })
 }
-// if the user wants to add an item to the list,  get the user to provide input
+// used to construct the item objects to store in the grocerylist array
 function shoppingListItem(name, quantity, price, bought){
     this.name = name;
     this.quantity = quantity;
@@ -44,6 +44,8 @@ function shoppingListItem(name, quantity, price, bought){
 function addItemToList(item){
     grocerylist.push(item);
 }
+//query user for input to create their shopping list item, always assumes the new item is unbought
+//(why would you add something you don't need to the list?)
 function createItem(){
     let item;
     let quantity;
@@ -70,6 +72,7 @@ function createItem(){
         })
     })
 }
+//checks that an item for a given name does actually exist
 function findItemByName(name){
     for(let i = 0; i < grocerylist.length; i++){
         if(grocerylist[i].name === name){
@@ -77,6 +80,7 @@ function findItemByName(name){
         }
     }
 }
+//removes the first instance of an item with a given name
 function removeItemByName(name){
     for(let i = 0; i < grocerylist.length; i++){
         if(grocerylist[i].name === name){
@@ -84,6 +88,7 @@ function removeItemByName(name){
         }
     }
 }
+//toggles whether the first instance of an item in the list has been bought
 function toggleItemByName(name, bool){
     for(let i = 0; i < grocerylist.length; i++){
         if(grocerylist[i].name === name){
@@ -91,6 +96,7 @@ function toggleItemByName(name, bool){
         }
     }
 }
+//gets user input and removes the matching item
 function userInitiatedRemoval(){
     let name;
     rl.setPrompt("What is the name of the item you want to remove? \n");
@@ -108,6 +114,7 @@ function userInitiatedRemoval(){
         }
     });
 }
+// gets user input and sets the item's bought value to either true or false
 function userInitiatedToggle(){
     let name;
     let bool;
